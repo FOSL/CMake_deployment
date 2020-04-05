@@ -1,5 +1,5 @@
 if(NOT  HIERARCHICAL_FOSL_PROJECT)
-	set(HIERARCHICAL_FOSL_PROJECT TRUE)
+	set(HIERARCHICAL_FOSL_PROJECT TRUE PARENT_SCOPE)
 	macro(project) # {{{
 		set(ARGV_list ${ARGV})
 		pre_project()
