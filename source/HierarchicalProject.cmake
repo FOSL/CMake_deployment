@@ -50,6 +50,20 @@ macro(pre_target_sources) # {{{
 		list(POP_FRONT ARGV_list                        LIBRARY_NAME )
 		list(PREPEND   ARGV_list ${PROJECT_NAMESPACE}-${LIBRARY_NAME})
 	endif()
+	list(POP_FRONT ARGV_list LIBRARY_NAME)
+	set(filename_list ${ARGV_list})
+	unset(ARGV_list)
+	list(APPEND ARGV_list ${LIBRARY_NAME})
+	foreach(FILENAME IN LISTS filename_list)
+		if(NOT (FILENAME STREQUAL "PRIVATE"
+		     OR FILENAME STREQUAL "PUBLIC"
+		     OR FILENAME STREQUAL "INTERFACE"))
+			list(APPEND ARGV_list "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/source/FOSL/${FILENAME}>")
+			list(APPEND ARGV_list "$<INSTALL_INTERFACE:/include/FOSL/${FILENAME}>")
+		else()
+			list(APPEND ARGV_list ${FILENAME})
+		endif()
+	endforeach()
 endmacro() # }}}
 macro(pre_target_link_libraries) # {{{
 	if(NOT FOSL)
@@ -79,5 +93,13 @@ macro(pre_add_test) # {{{
 		list(INSERT ARGV_list 1 "${PROJECT_NAMESPACE}::${PROJECT_COMPONENT}->${TEST_NAME}")
 	else()
 		list(INSERT ARGV_list 1                       "${PROJECT_COMPONENT}->${TEST_NAME}")
+	endif()
+
+	list(GET ARGV_list 3 TEST_COMMAND)
+	list(REMOVE_AT ARGV_list 3)
+	if(NOT FOSL)
+		list(INSERT ARGV_list 3 "${PROJECT_BINARY_DIR}/test/${TEST_COMMAND}")
+	else()
+		list(INSERT ARGV_list 3 "${PROJECT_BINARY_DIR}/test/${TEST_COMMAND}")
 	endif()
 endmacro() # }}}
