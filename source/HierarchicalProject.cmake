@@ -90,12 +90,4 @@ macro(pre_add_test) # {{{
 	else()
 		list(INSERT ARGV_list 1                       "${PROJECT_COMPONENT}->${TEST_NAME}")
 	endif()
-
-	list(GET ARGV_list 3 TEST_COMMAND)
-	list(REMOVE_AT ARGV_list 3)
-	if(NOT FOSL)
-		list(INSERT ARGV_list 3 "${PROJECT_BINARY_DIR}/test/${TEST_COMMAND}")
-	else()
-		list(INSERT ARGV_list 3 "${PROJECT_BINARY_DIR}/test/${TEST_COMMAND}")
-	endif()
 endmacro() # }}}
