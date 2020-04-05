@@ -1,8 +1,4 @@
-if(NOT HIERARCHICAL_FOSL_PROJECT)
-	set(HIERARCHICAL_FOSL_PROJECT TRUE)
-	include(HierarchicalFunctionWrappers)
-endif()
-include(HierarchicalDefaultFunctionWrapperCallbacks)
+include(HierarchicalFunctionWrappers)
 
 macro(pre_project) # {{{
 	if(NOT FOSL)
