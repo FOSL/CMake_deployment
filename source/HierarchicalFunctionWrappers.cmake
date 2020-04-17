@@ -1,4 +1,4 @@
-if(NOT  HIERARCHICAL_FOSL_PROJECT)
+if(NOT HIERARCHICAL_FOSL_PROJECT)
 	set(HIERARCHICAL_FOSL_PROJECT TRUE PARENT_SCOPE)
 	macro(project) # {{{
 		set(ARGV_list ${ARGV})
@@ -6,6 +6,14 @@ if(NOT  HIERARCHICAL_FOSL_PROJECT)
 		_project(${ARGV_list})
 		post_project()
 	endmacro(project) # }}}
+	macro(find_package) # {{{
+		set(ARGV_list ${ARGV})
+		pre_find_package()
+		if(NOT ARGV_list STREQUAL "!")
+			_find_package(${ARGV_list})
+			post_find_package()
+		endif()
+	endmacro() # }}}
 	macro(add_library) # {{{
 		set(ARGV_list ${ARGV})
 		pre_add_library()

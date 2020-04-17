@@ -1,7 +1,4 @@
-if(NOT HIERARCHICAL_FOSL_PROJECT)
-	set(HIERARCHICAL_FOSL_PROJECT TRUE)
-	include(HierarchicalFunctionWrappers)
-endif()
+include(HierarchicalFunctionWrappers)
 include(HierarchicalDefaultFunctionWrapperCallbacks)
 
 macro(pre_project) # {{{
@@ -14,6 +11,14 @@ macro(pre_project) # {{{
 endmacro() # }}}
 macro(post_project) # {{{
 	set(PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/source")
+endmacro() # }}}
+
+macro(pre_find_package) # {{{
+	list(GET ARGV_list 0 PACKAGE_NAME)
+	message(STATUS "NAME: ${PACKAGE_NAME}")
+	if(PACKAGE_NAME STREQUAL "FOSL")
+		set(ARGV_list "")
+	endif()
 endmacro() # }}}
 
 macro(pre_add_executable) # {{{
@@ -39,6 +44,7 @@ macro(pre_target_sources) # {{{
 		list(PREPEND ARGV_list                      "${PROJECT_COMPONENT}-test_${TEST_NAME}")
 	endif()
 endmacro() # }}}
+
 macro(pre_target_include_directories) # {{{
 	list(POP_FRONT ARGV_list TEST_NAME)
 	if(NOT FOSL)
@@ -47,6 +53,7 @@ macro(pre_target_include_directories) # {{{
 		list(PREPEND ARGV_list                      "${PROJECT_COMPONENT}-test_${TEST_NAME}")
 	endif()
 endmacro() # }}}
+
 macro(pre_target_link_libraries) # {{{
 	list(POP_FRONT ARGV_list TEST_NAME)
 	if(NOT FOSL)

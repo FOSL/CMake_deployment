@@ -4,6 +4,12 @@ endmacro() # }}}
 macro(post_project) # {{{
 endmacro() # }}}
 # }}}
+# find_package {{{
+macro(pre_project) # {{{
+endmacro() # }}}
+macro(post_project) # {{{
+endmacro() # }}}
+# }}}
 # add_library {{{
 macro(pre_add_library) # {{{
 endmacro() # }}}
